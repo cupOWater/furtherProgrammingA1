@@ -8,4 +8,13 @@ public class StudentEnrolment {
         this.course = course;
         this.semester = semester;
     }
+
+    @Override
+    public String toString() {
+        return "StudentEnrolment{" +
+                "student=" + student +
+                ", course=" + course +
+                ", semester='" + semester + '\'' +
+                '}';
+    }
 }
