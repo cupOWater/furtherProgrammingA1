@@ -14,12 +14,12 @@ public class StudentEnrolmentManager {
         fillData(filePath);
     }
 
-    void addEnrolment(String sid, String cid, String semester){
+    boolean addEnrolment(String sid, String cid, String semester){
         Student student = isStudentPresent(sid);
         Course course = isCoursePresent(cid);
         if(student != null && course != null && isValidSemester(semester)){
             studentEnrolments.add(new StudentEnrolment(student, course, semester));
-            return;
+            return true;
         }
         if(student == null){
             System.out.println("Student not found...");
@@ -30,10 +30,18 @@ public class StudentEnrolmentManager {
         if(!isValidSemester(semester)){
             System.out.println("Invalid semester value...");
         }
+        return false;
     }
 
     void updateEnrolment(){}
-    void deleteEnrolment(){}
+
+    void deleteEnrolment(String sid, String cid, String semester){
+        StudentEnrolment enrolment = getOne(sid, cid, semester);
+        if (enrolment != null){
+            studentEnrolments.remove(enrolment);
+            System.out.println("Delete successful");
+        }
+    }
 
     StudentEnrolment getOne(String sid, String cid, String semester){
         Student student = isStudentPresent(sid);
@@ -98,7 +106,6 @@ public class StudentEnrolmentManager {
                 // Add course into courses array if not present
                 courses.add(new Course(data[3], data[4], data[5]));
             }
-
             // Add enrollment from default.csv
             addEnrolment(data[0], data[3], data[6]);
             line = reader.readLine();

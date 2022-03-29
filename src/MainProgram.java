@@ -14,7 +14,9 @@ public class MainProgram {
             System.out.print("Enter semester: ");
             String sem = userInput.next();
 
-            enrolmentManager.addEnrolment(sid, cid, sem);
+            if(enrolmentManager.addEnrolment(sid, cid, sem)){
+                System.out.println("Enrolled successfully...");
+            }
             System.out.println();
 
         }
