@@ -2,23 +2,24 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class StudentEnrolmentManager {
     ArrayList<Student> students = new ArrayList<>();
     ArrayList<Course> courses = new ArrayList<>();
     ArrayList<StudentEnrolment> studentEnrolments = new ArrayList<>();
-    Scanner s = new Scanner(System.in);
 
     public StudentEnrolmentManager(String filePath) throws IOException {
         fillData(filePath);
     }
 
-    void add(String sid, String cid, String semester){
+    void addEnrolment(String sid, String cid, String semester){
         Student student = isStudentPresent(sid);
         Course course = isCoursePresent(cid);
-        if(student != null && course != null){
+        if(student != null && course != null && isValidSemester(semester)){
             studentEnrolments.add(new StudentEnrolment(student, course, semester));
+            return;
         }
         if(student == null){
             System.out.println("Student not found...");
@@ -26,10 +27,13 @@ public class StudentEnrolmentManager {
         if(course == null){
             System.out.println("This course is not in the system...");
         }
+        if(!isValidSemester(semester)){
+            System.out.println("Invalid semester value...");
+        }
     }
 
-    void update(){}
-    void delete(){}
+    void updateEnrolment(){}
+    void deleteEnrolment(){}
     void getOne(){}
     void getAll(){}
 
@@ -51,6 +55,12 @@ public class StudentEnrolmentManager {
         return null;
     }
 
+    private boolean isValidSemester(String semester){
+        Pattern regPattern = Pattern.compile("\\d{4}[ABC]");
+        Matcher check = regPattern.matcher(semester);
+        return check.matches();
+    }
+
     void fillData(String filePath) throws IOException {
         BufferedReader reader = new BufferedReader(new FileReader(filePath));
         String line = reader.readLine();
@@ -66,7 +76,7 @@ public class StudentEnrolmentManager {
             }
 
             // Add enrollment from default.csv
-            add(data[0], data[3], data[6]);
+            addEnrolment(data[0], data[3], data[6]);
             line = reader.readLine();
         }
     }

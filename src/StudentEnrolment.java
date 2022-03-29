@@ -11,10 +11,9 @@ public class StudentEnrolment {
 
     @Override
     public String toString() {
-        return "StudentEnrolment{" +
-                "student=" + student +
-                ", course=" + course +
-                ", semester='" + semester + '\'' +
+        return "Student ID = " + student.getId() +
+                ", Course ID = " + course.getId() +
+                ", Semester = '" + semester + '\'' +
                 '}';
     }
 }
