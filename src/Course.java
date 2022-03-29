@@ -17,7 +17,6 @@ public class Course {
     public String toString() {
         return "Course ID= '" + id + '\'' +
                 ", Course Name= '" + name + '\'' +
-                ", Number of Credits= '" + credNum + '\'' +
-                '}';
+                ", Number of Credits= '" + credNum + '\'';
     }
 }

@@ -34,7 +34,31 @@ public class StudentEnrolmentManager {
 
     void updateEnrolment(){}
     void deleteEnrolment(){}
-    void getOne(){}
+
+    StudentEnrolment getOne(String sid, String cid, String semester){
+        Student student = isStudentPresent(sid);
+        Course course = isCoursePresent(cid);
+        if(student == null){
+            System.out.println("Student not found...");
+            return null;
+        }
+        if(course == null){
+            System.out.println("This course is not in the system...");
+            return null;
+        }
+        if(!isValidSemester(semester)){
+            System.out.println("Invalid semester value...");
+            return null;
+        }
+
+        for (StudentEnrolment enrolment: studentEnrolments) {
+            if(student.equals(enrolment.getStudent()) && course.equals(enrolment.getCourse()) && semester.equals(enrolment.getSemester())){
+                return enrolment;
+            }
+        }
+        System.out.println("Enrolment not found...");
+        return null;
+    }
     void getAll(){}
 
     private Student isStudentPresent(String sid){

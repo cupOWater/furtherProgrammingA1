@@ -3,6 +3,18 @@ public class StudentEnrolment {
     private Course course;
     private String semester;
 
+    public Student getStudent() {
+        return student;
+    }
+
+    public Course getCourse() {
+        return course;
+    }
+
+    public String getSemester() {
+        return semester;
+    }
+
     public StudentEnrolment(Student student, Course course, String semester) {
         this.student = student;
         this.course = course;
@@ -13,7 +25,6 @@ public class StudentEnrolment {
     public String toString() {
         return "Student ID = " + student.getId() +
                 ", Course ID = " + course.getId() +
-                ", Semester = '" + semester + '\'' +
-                '}';
+                ", Semester = '" + semester + '\'';
     }
 }

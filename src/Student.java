@@ -17,7 +17,6 @@ public class Student {
     public String toString() {
         return "Student ID= '" + id + '\'' +
                 ", Student Name= '" + name + '\'' +
-                ", Birth Date= '" + birthDate + '\'' +
-                '}';
+                ", Birth Date= '" + birthDate + '\'';
     }
 }
