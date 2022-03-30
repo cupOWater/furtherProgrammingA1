@@ -20,9 +20,11 @@ public class StudentEnrolmentManager {
         Student student = isStudentPresent(sid);
         Course course = isCoursePresent(cid);
         if(student != null && course != null && isValidSemester(semester)){
-            if(getOneEnrolment(sid, cid, semester) != null){
-                System.out.println("Enrolment is already in the system...");
-                return false;
+            for (StudentEnrolment enrolment: studentEnrolments) {
+                if(student.equals(enrolment.getStudent()) && course.equals(enrolment.getCourse()) && semester.equalsIgnoreCase(enrolment.getSemester())){
+                    System.out.println("Enrolment already exists in system...");
+                    return false;
+                }
             }
             studentEnrolments.add(new StudentEnrolment(student, course, semester));
             return true;
@@ -50,7 +52,7 @@ public class StudentEnrolmentManager {
         return false;
     }
 
-    StudentEnrolment getOneEnrolment(String sid, String cid, String semester){
+    public StudentEnrolment getOneEnrolment(String sid, String cid, String semester){
         Student student = isStudentPresent(sid);
         Course course = isCoursePresent(cid);
         if(student != null && course != null && isValidSemester(semester)){
@@ -69,13 +71,15 @@ public class StudentEnrolmentManager {
         }
         if(!isValidSemester(semester)){
             System.out.println("Invalid semester value...");
-
+        }else{
+            System.out.println("Enrolment does not exist...");
         }
         return null;
     }
     public ArrayList<StudentEnrolment> getAllEnrolment(){
         return studentEnrolments;
     }
+
 
     public Student isStudentPresent(String sid){
         for (Student student: students) {
@@ -86,7 +90,7 @@ public class StudentEnrolmentManager {
         return null;
     }
 
-    Course isCoursePresent(String cid){
+    public Course isCoursePresent(String cid){
         for (Course course : courses){
             if(course.getId().equals(cid.toUpperCase())){
                 return course;

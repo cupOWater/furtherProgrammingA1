@@ -12,8 +12,8 @@ public class ReportFactory {
     }
 
     public CourseReport createCourseReport(){
-        System.out.print("Enter Student ID: ");
         Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter Student ID: ");
         String sid = scanner.nextLine();
         Student student = enrolmentManager.isStudentPresent(sid);
         if(student == null){
@@ -30,6 +30,34 @@ public class ReportFactory {
         return new CourseReport(enrolmentManager, student, semester);
     }
 
+    public StudentReport createStudentReport(){
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter Course ID: ");
+        String cid = scanner.nextLine();
+        Course course = enrolmentManager.isCoursePresent(cid);
+        if(course == null){
+            System.out.println("Course is not in system...");
+            return null;
+        }
 
+        System.out.print("Enter Semester: ");
+        String semester = scanner.nextLine();
+        if(!enrolmentManager.isValidSemester(semester)) {
+            System.out.println("Invalid semester value...");
+            return null;
+        }
+        return new StudentReport(enrolmentManager, course, semester);
+    }
+
+    public CourseSemesterReport createCourseSemesterReport(){
+        Scanner s = new Scanner(System.in);
+        System.out.print("Enter Semester: ");
+        String semester = s.nextLine();
+        if(enrolmentManager.isValidSemester(semester)){
+            return new CourseSemesterReport(enrolmentManager, semester);
+        }
+        System.out.println("Invalid semester...");
+        return null;
+    }
 }
 
