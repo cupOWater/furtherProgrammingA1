@@ -1,3 +1,5 @@
+package enrolsystem.main;
+
 public class Student {
     private String id;
     private String name;

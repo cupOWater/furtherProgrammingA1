@@ -1,3 +1,6 @@
+import enrolsystem.main.*;
+import enrolsystem.report.*;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -15,6 +18,7 @@ public class MainProgram {
                 3. Report
                 4. Print All Enrolments
                 0. Exit""");
+            System.out.print("> ");
             choice = userInput.nextLine();
             sep();
             switch (choice){
@@ -48,7 +52,36 @@ public class MainProgram {
                     if(enrolmentManager.deleteEnrolment(sid, cid, sem)){
                         System.out.println("Delete successfully...");
                     }
-                    System.out.println();
+                    sep();
+                    break;
+                case "3":
+                    ReportFactory reportFactory = new ReportFactory(enrolmentManager);
+                    Report report;
+                    System.out.println("""
+                            1. Print all courses for 1 student in 1 semester
+                            2. Print all students of 1 course in 1 semester
+                            3. Prints all courses offered in 1 semester
+                            Other keys to return""");
+                    System.out.print("> ");
+                    choice = userInput.nextLine();
+                    sep();
+                    switch (choice){
+                        default:
+                            System.out.println();
+                            break;
+                        case "1":
+                            report = reportFactory.createCourseReport();
+                            if(report != null){
+                                report.display();
+                            }
+                            break;
+                        case "2":
+                            break;
+                        case"3":
+                            break;
+                    }
+
+
                     sep();
                     break;
                 case"4":

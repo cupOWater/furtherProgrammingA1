@@ -1,3 +1,5 @@
+package enrolsystem.main;
+
 public class StudentEnrolment {
     private Student student;
     private Course course;
@@ -18,7 +20,7 @@ public class StudentEnrolment {
     public StudentEnrolment(Student student, Course course, String semester) {
         this.student = student;
         this.course = course;
-        this.semester = semester;
+        this.semester = semester.toUpperCase();
     }
 
     @Override
