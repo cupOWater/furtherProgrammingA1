@@ -15,6 +15,14 @@ public class Student {
         return id;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public String getBirthDate() {
+        return birthDate;
+    }
+
     @Override
     public String toString() {
         return "Student ID= " + id +

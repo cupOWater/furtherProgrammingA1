@@ -15,6 +15,14 @@ public class Course {
         return id;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public String getCredNum() {
+        return credNum;
+    }
+
     @Override
     public String toString() {
         return "Course ID= " + id +

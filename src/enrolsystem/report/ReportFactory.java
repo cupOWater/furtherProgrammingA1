@@ -49,12 +49,12 @@ public class ReportFactory {
         return new StudentReport(enrolmentManager, course, semester);
     }
 
-    public CourseSemesterReport createCourseSemesterReport(){
+    public CourseReport createCourseSemesterReport(){
         Scanner s = new Scanner(System.in);
         System.out.print("Enter Semester: ");
         String semester = s.nextLine();
         if(enrolmentManager.isValidSemester(semester)){
-            return new CourseSemesterReport(enrolmentManager, semester);
+            return new CourseReport(enrolmentManager, semester);
         }
         System.out.println("Invalid semester...");
         return null;

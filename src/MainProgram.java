@@ -17,14 +17,13 @@ public class MainProgram {
                 2. Delete Enrolment
                 3. Report
                 4. Print All Enrolments
-                0. Exit""");
+                Enter any other keys to exit...""");
                 System.out.print("> ");
                 choice = userInput.nextLine();
                 sep();
                 switch (choice){
                     default:
-                        System.out.println("Invalid option, please enter again...\n");
-                        break;
+                        break decision;
                     case "1":
                         System.out.print("Enter student ID: ");
                         String sid = userInput.nextLine();
@@ -77,7 +76,17 @@ public class MainProgram {
                             case "3" -> report = reportFactory.createCourseSemesterReport();
                         }
                         if(report != null){
-                            report.display();
+                            if(report.display()){
+                                System.out.print("Save as CSV?(Enter \"Y\" to confirm) ");
+                                choice = userInput.nextLine().toUpperCase();
+                                if(choice.equals("Y")){
+                                    if(report.saveCsv()){
+                                        System.out.println("Save successfully...");
+                                    }else{
+                                        System.out.println("Unable to save...");
+                                    }
+                                }
+                            }
                         }
                         sep();
                         break;
@@ -85,8 +94,6 @@ public class MainProgram {
                         printArray(enrolmentManager.getAllEnrolment());
                         sep();
                         break;
-                    case "0":
-                        break decision;
                 }
             }
         }catch(IOException e){
