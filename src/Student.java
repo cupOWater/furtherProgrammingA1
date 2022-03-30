@@ -15,8 +15,8 @@ public class Student {
 
     @Override
     public String toString() {
-        return "Student ID= '" + id + '\'' +
-                ", Student Name= '" + name + '\'' +
-                ", Birth Date= '" + birthDate + '\'';
+        return "Student ID= " + id +
+                " | Student Name= " + name +
+                " | Birth Date= " + birthDate;
     }
 }

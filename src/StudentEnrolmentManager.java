@@ -6,9 +6,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class StudentEnrolmentManager {
-    ArrayList<Student> students = new ArrayList<>();
-    ArrayList<Course> courses = new ArrayList<>();
-    ArrayList<StudentEnrolment> studentEnrolments = new ArrayList<>();
+    private ArrayList<Student> students = new ArrayList<>();
+    private ArrayList<Course> courses = new ArrayList<>();
+    private ArrayList<StudentEnrolment> studentEnrolments = new ArrayList<>();
 
     public StudentEnrolmentManager(String filePath) throws IOException {
         fillData(filePath);
@@ -35,15 +35,16 @@ public class StudentEnrolmentManager {
 
     void updateEnrolment(){}
 
-    void deleteEnrolment(String sid, String cid, String semester){
-        StudentEnrolment enrolment = getOne(sid, cid, semester);
+    boolean deleteEnrolment(String sid, String cid, String semester){
+        StudentEnrolment enrolment = getOneEnrolment(sid, cid, semester);
         if (enrolment != null){
             studentEnrolments.remove(enrolment);
-            System.out.println("Delete successful");
+            return true;
         }
+        return false;
     }
 
-    StudentEnrolment getOne(String sid, String cid, String semester){
+    StudentEnrolment getOneEnrolment(String sid, String cid, String semester){
         Student student = isStudentPresent(sid);
         Course course = isCoursePresent(cid);
         if(student == null){
@@ -67,7 +68,9 @@ public class StudentEnrolmentManager {
         System.out.println("Enrolment not found...");
         return null;
     }
-    void getAll(){}
+    ArrayList<StudentEnrolment> getAllEnrolment(){
+        return studentEnrolments;
+    }
 
     private Student isStudentPresent(String sid){
         for (Student student: students) {
