@@ -5,6 +5,8 @@ import enrolsystem.main.*;
 import java.util.Scanner;
 
 public class ReportFactory {
+    // This class will create different types of the Report instance
+    // Allow validation before instantiating the object
     StudentEnrolmentManager enrolmentManager;
 
     public ReportFactory(StudentEnrolmentManager enrolmentManager) {

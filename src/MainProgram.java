@@ -13,10 +13,10 @@ public class MainProgram {
             StudentEnrolmentManager enrolmentManager = new StudentEnrolmentManager("default.csv");
             decision: while(true){
                 System.out.println("""
-                1. Add Enrolment
-                2. Delete Enrolment
+                1. Add an enrolment
+                2. Update enrolment for a student
                 3. Report
-                4. Print All Enrolments
+                4. Print all enrolments
                 Enter any other keys to exit...""");
                 System.out.print("> ");
                 choice = userInput.nextLine();
@@ -41,19 +41,46 @@ public class MainProgram {
                         sep();
                         break;
                     case "2":
-                        printArray(enrolmentManager.getAllEnrolment());
-                        sep();
                         System.out.print("Enter student ID: ");
                         sid = userInput.nextLine();
-                        System.out.print("Enter course ID: ");
-                        cid = userInput.nextLine();
-                        System.out.print("Enter semester: ");
-                        sem = userInput.nextLine();
+                        if(enrolmentManager.getStudentEnrolment(sid) == null){
+                            sep();
+                            break;
+                        }
+                        printArray(enrolmentManager.getStudentEnrolment(sid));
+                        System.out.println("""
+                                1. Add enrolment
+                                2. Delete enrolment
+                                Other keys to return...""");
+                        System.out.print("> ");
+                        choice = userInput.nextLine();
+                        sep();
 
-                        if(enrolmentManager.deleteEnrolment(sid, cid, sem)){
-                            System.out.println("Delete successfully...");
-                        }else{
-                            System.out.println("Delete fail...");
+                        switch (choice) {
+                            default -> {
+                            }
+                            case "1" -> {
+                                System.out.print("Enter course ID: ");
+                                cid = userInput.nextLine();
+                                System.out.print("Enter semester: ");
+                                sem = userInput.nextLine();
+                                if (enrolmentManager.addEnrolment(sid, cid, sem)) {
+                                    System.out.println("Add successfully...");
+                                } else {
+                                    System.out.println("Add fail...");
+                                }
+                            }
+                            case "2" -> {
+                                System.out.print("Enter course ID: ");
+                                cid = userInput.nextLine();
+                                System.out.print("Enter semester: ");
+                                sem = userInput.nextLine();
+                                if (enrolmentManager.deleteEnrolment(sid, cid, sem)) {
+                                    System.out.println("Delete successfully...");
+                                } else {
+                                    System.out.println("Delete fail...");
+                                }
+                            }
                         }
                         sep();
                         break;
@@ -64,7 +91,7 @@ public class MainProgram {
                             1. Print all courses for 1 student in 1 semester
                             2. Print all students of 1 course in 1 semester
                             3. Prints all courses offered in 1 semester
-                            Other keys to return""");
+                            Other keys to return...""");
                         System.out.print("> ");
                         choice = userInput.nextLine();
                         sep();
@@ -105,10 +132,13 @@ public class MainProgram {
     }
 
     static void sep(){
+        // print a separator line
         System.out.println("-------------------------------------");
     }
 
     static void printArray(ArrayList items){
+        // Print each object in arraylist on different line
+        // Must format toString() of object to fit the display
         for (Object item : items) {
             System.out.println(item);
         }

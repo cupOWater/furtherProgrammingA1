@@ -8,24 +8,28 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class StudentEnrolmentManager {
-    private ArrayList<Student> students = new ArrayList<>();
-    private ArrayList<Course> courses = new ArrayList<>();
-    private ArrayList<StudentEnrolment> studentEnrolments = new ArrayList<>();
+    // Instantiate the required array lists for the enrolment system
+    private final ArrayList<Student> students = new ArrayList<>();
+    private final ArrayList<Course> courses = new ArrayList<>();
+    private final ArrayList<StudentEnrolment> studentEnrolments = new ArrayList<>();
 
     public StudentEnrolmentManager(String filePath) throws IOException {
+        // fill the above arrays on instantiation
         fillData(filePath);
     }
 
     public boolean addEnrolment(String sid, String cid, String semester){
         Student student = isStudentPresent(sid);
         Course course = isCoursePresent(cid);
-        if(student != null && course != null && isValidSemester(semester)){
-            for (StudentEnrolment enrolment: studentEnrolments) {
+        if(student != null && course != null && isValidSemester(semester)){ // Checking for data validity
+            for (StudentEnrolment enrolment: studentEnrolments) { // Look through enrolments to see if there are duplicates
                 if(student.equals(enrolment.getStudent()) && course.equals(enrolment.getCourse()) && semester.equalsIgnoreCase(enrolment.getSemester())){
                     System.out.println("Enrolment already exists in system...");
                     return false;
                 }
             }
+            // If everything is good, then add enrolment to array
+            // Else display missing or invalid entry
             studentEnrolments.add(new StudentEnrolment(student, course, semester));
             return true;
         }
@@ -41,15 +45,28 @@ public class StudentEnrolmentManager {
         return false;
     }
 
-    void updateEnrolment(){}
-
     public boolean deleteEnrolment(String sid, String cid, String semester){
-        StudentEnrolment enrolment = getOneEnrolment(sid, cid, semester);
+        StudentEnrolment enrolment = getOneEnrolment(sid, cid, semester); // Check to see if enrolment is present
         if (enrolment != null){
             studentEnrolments.remove(enrolment);
             return true;
         }
         return false;
+    }
+
+    public ArrayList<StudentEnrolment> getStudentEnrolment(String sid){
+        Student student = isStudentPresent(sid);
+        if(student == null){
+            System.out.println("Student not found...");
+            return null;
+        }
+        ArrayList<StudentEnrolment> enrolments = new ArrayList<>();
+        for (StudentEnrolment enrolment: studentEnrolments) { // Return all enrolments that are belonged to 1 student
+            if(enrolment.getStudent().equals(student)){
+                enrolments.add(enrolment);
+            }
+        }
+        return enrolments;
     }
 
     public StudentEnrolment getOneEnrolment(String sid, String cid, String semester){
@@ -58,11 +75,11 @@ public class StudentEnrolmentManager {
         if(student != null && course != null && isValidSemester(semester)){
             for (StudentEnrolment enrolment: studentEnrolments) {
                 if(student.equals(enrolment.getStudent()) && course.equals(enrolment.getCourse()) && semester.equalsIgnoreCase(enrolment.getSemester())){
-                    return enrolment;
+                    return enrolment; // If all entries are valid, return that StudentEnrolment object
                 }
             }
         }
-
+        // Else display error messages
         if(student == null){
             System.out.println("Student not found...");
         }
@@ -82,6 +99,7 @@ public class StudentEnrolmentManager {
 
 
     public Student isStudentPresent(String sid){
+        // Return Student object if present in students arraylist
         for (Student student: students) {
             if(student.getId().equals(sid.toUpperCase())){
                 return student;
@@ -91,6 +109,7 @@ public class StudentEnrolmentManager {
     }
 
     public Course isCoursePresent(String cid){
+        // Return Course object if present in courses arraylist
         for (Course course : courses){
             if(course.getId().equals(cid.toUpperCase())){
                 return course;
@@ -100,12 +119,14 @@ public class StudentEnrolmentManager {
     }
 
     public boolean isValidSemester(String semester){
+        // Use regex to make sure semester value is 4 digits follow by a, b or c case-insensitive
         Pattern regPattern = Pattern.compile("\\d{4}[ABCabc]");
         Matcher check = regPattern.matcher(semester);
         return check.matches();
     }
 
     private void fillData(String filePath) throws IOException {
+        // Read data from provided file and fill them in to arrays
         BufferedReader reader = new BufferedReader(new FileReader(filePath));
         String line = reader.readLine();
         while(line != null){

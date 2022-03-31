@@ -2,7 +2,6 @@ package enrolsystem.report;
 
 import enrolsystem.main.*;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -12,17 +11,15 @@ public abstract class Report {
     protected Report(StudentEnrolmentManager enrolmentManager) {
         this.enrolmentManager = enrolmentManager;
     }
-
     public abstract boolean display();
     public abstract boolean saveCsv();
-
 }
 
 class CourseReport extends Report {
     private Student student;
-    private String semester;
-    private String fileName;
-    private ArrayList<Course> courses = new ArrayList<>();
+    private final String semester;
+    private final String fileName;
+    private final ArrayList<Course> courses = new ArrayList<>();
 
     protected CourseReport(StudentEnrolmentManager enrolmentManager, Student student, String semester) {
         super(enrolmentManager);
@@ -34,6 +31,17 @@ class CourseReport extends Report {
             }
         }
         fileName = student.getId() + "_Courses_" + this.semester +".csv";
+    }
+
+    public String getSemester() {
+        return semester;
+    }
+
+    public String getStudentID() {
+        if(student != null){
+            return student.getId();
+        }
+        return null;
     }
 
     protected CourseReport(StudentEnrolmentManager enrolmentManager, String semester) {
@@ -85,10 +93,18 @@ class CourseReport extends Report {
 }
 
 class StudentReport extends Report {
-    Course course;
-    String semester;
-    String fileName;
-    ArrayList<Student> students = new ArrayList<>();
+    private final Course course;
+    private final String semester;
+    private final String fileName;
+    private final ArrayList<Student> students = new ArrayList<>();
+
+    public String getCourseID() {
+        return course.getId();
+    }
+
+    public String getSemester() {
+        return semester;
+    }
 
     protected StudentReport(StudentEnrolmentManager enrolmentManager, Course course, String semester) {
         super(enrolmentManager);
