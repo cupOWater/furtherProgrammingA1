@@ -94,7 +94,7 @@ public class StudentEnrolmentManager {
         }
         return null;
     }
-    public ArrayList<StudentEnrolment> getAllEnrolment(){
+    public ArrayList<StudentEnrolment> getAllEnrolments(){
         return studentEnrolments;
     }
 

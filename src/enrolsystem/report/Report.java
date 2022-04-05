@@ -25,7 +25,7 @@ class CourseReport extends Report {
         super(enrolmentManager);
         this.student = student;
         this.semester = semester.toUpperCase();
-        for (StudentEnrolment enrolment: enrolmentManager.getAllEnrolment()) {
+        for (StudentEnrolment enrolment: enrolmentManager.getAllEnrolments()) {
             if(enrolment.getStudent().equals(student) && enrolment.getSemester().equalsIgnoreCase(semester)){
                 courses.add(enrolment.getCourse());
             }
@@ -47,7 +47,7 @@ class CourseReport extends Report {
     protected CourseReport(StudentEnrolmentManager enrolmentManager, String semester) {
         super(enrolmentManager);
         this.semester = semester.toUpperCase();
-        for (StudentEnrolment enrolment: enrolmentManager.getAllEnrolment()) {
+        for (StudentEnrolment enrolment: enrolmentManager.getAllEnrolments()) {
             if(enrolment.getSemester().equalsIgnoreCase(semester) && !courses.contains(enrolment.getCourse())){
                 courses.add(enrolment.getCourse());
             }
@@ -110,7 +110,7 @@ class StudentReport extends Report {
         super(enrolmentManager);
         this.course = course;
         this.semester = semester.toUpperCase();
-        for (StudentEnrolment enrolment: enrolmentManager.getAllEnrolment()) {
+        for (StudentEnrolment enrolment: enrolmentManager.getAllEnrolments()) {
             if(enrolment.getCourse().equals(course) && enrolment.getSemester().equalsIgnoreCase(semester)){
                 students.add(enrolment.getStudent());
             }

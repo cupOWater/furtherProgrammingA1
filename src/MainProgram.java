@@ -13,6 +13,8 @@ public class MainProgram {
         try{
             StudentEnrolmentManager enrolmentManager = new StudentEnrolmentManager(filePath);
             System.out.println("All data from " + filePath + " has been added... \n");
+            printArray(enrolmentManager.getAllEnrolments());
+            sep();
             decision: while(true){
                 System.out.println("""
                 1. Add an enrolment
@@ -151,7 +153,7 @@ public class MainProgram {
                         switch (choice) {
                             default -> {
                             }
-                            case "1" -> printArray(enrolmentManager.getAllEnrolment());
+                            case "1" -> printArray(enrolmentManager.getAllEnrolments());
                             case "2" -> printArray(enrolmentManager.getStudents());
                             case "3" -> printArray(enrolmentManager.getCourses());
                         }
