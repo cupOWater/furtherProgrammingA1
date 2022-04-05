@@ -14,8 +14,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class ReportFactoryTest {
     StudentEnrolmentManager sem;
     ReportFactory factory;
-    String userInputValid = "s101312\r2021c";
-    String userInputInvalid = "s3884734\r2020c";
 
     @BeforeEach
     void setUp() throws IOException {
