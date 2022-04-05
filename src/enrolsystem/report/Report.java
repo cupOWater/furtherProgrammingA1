@@ -83,6 +83,7 @@ class CourseReport extends Report {
             }
             writer.write(builder.toString());
             writer.flush();
+            writer.close();
             return true;
         }
         catch(IOException e){
@@ -146,6 +147,7 @@ class StudentReport extends Report {
             }
             writer.write(builder.toString());
             writer.flush();
+            writer.close();
             return true;
         }catch (IOException e){
             System.out.println("Cannot create file...");
