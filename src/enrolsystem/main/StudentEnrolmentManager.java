@@ -54,14 +54,15 @@ public class StudentEnrolmentManager {
         return false;
     }
 
-    public ArrayList<StudentEnrolment> getStudentEnrolment(String sid){
+    public ArrayList<StudentEnrolment> getStudentEnrolments(String sid){
+        // Return all enrolments that are belonged to 1 student
         Student student = isStudentPresent(sid);
         if(student == null){
             System.out.println("Student not found...");
             return null;
         }
         ArrayList<StudentEnrolment> enrolments = new ArrayList<>();
-        for (StudentEnrolment enrolment: studentEnrolments) { // Return all enrolments that are belonged to 1 student
+        for (StudentEnrolment enrolment: studentEnrolments) {
             if(enrolment.getStudent().equals(student)){
                 enrolments.add(enrolment);
             }
@@ -143,5 +144,13 @@ public class StudentEnrolmentManager {
             addEnrolment(data[0], data[3], data[6]);
             line = reader.readLine();
         }
+    }
+
+    public ArrayList<Student> getStudents() {
+        return students;
+    }
+
+    public ArrayList<Course> getCourses() {
+        return courses;
     }
 }

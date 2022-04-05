@@ -9,14 +9,17 @@ public class MainProgram {
     public static void main(String[] args){
         Scanner userInput = new Scanner(System.in);
         String choice;
+        String filePath = "default.csv";
         try{
-            StudentEnrolmentManager enrolmentManager = new StudentEnrolmentManager("default.csv");
+            StudentEnrolmentManager enrolmentManager = new StudentEnrolmentManager(filePath);
+            System.out.println("All data from " + filePath + " has been added... \n");
             decision: while(true){
                 System.out.println("""
                 1. Add an enrolment
-                2. Update enrolment for a student
-                3. Report
-                4. Print all enrolments
+                2. Delete an enrolment
+                3. Update enrolment for a student
+                4. Report
+                5. Display
                 Enter any other keys to exit...""");
                 System.out.print("> ");
                 choice = userInput.nextLine();
@@ -40,14 +43,30 @@ public class MainProgram {
                         }
                         sep();
                         break;
+
                     case "2":
                         System.out.print("Enter student ID: ");
                         sid = userInput.nextLine();
-                        if(enrolmentManager.getStudentEnrolment(sid) == null){
+                        System.out.print("Enter course ID: ");
+                        cid = userInput.nextLine();
+                        System.out.print("Enter semester: ");
+                        sem = userInput.nextLine();
+                        if (enrolmentManager.deleteEnrolment(sid, cid, sem)) {
+                            System.out.println("Delete successfully...");
+                        } else {
+                            System.out.println("Delete fail...");
+                        }
+                        sep();
+                        break;
+
+                    case "3":
+                        System.out.print("Enter student ID: ");
+                        sid = userInput.nextLine();
+                        if(enrolmentManager.getStudentEnrolments(sid) == null){
                             sep();
                             break;
                         }
-                        printArray(enrolmentManager.getStudentEnrolment(sid));
+                        printArray(enrolmentManager.getStudentEnrolments(sid));
                         System.out.println("""
                                 1. Add enrolment
                                 2. Delete enrolment
@@ -84,7 +103,8 @@ public class MainProgram {
                         }
                         sep();
                         break;
-                    case "3":
+
+                    case "4":
                         ReportFactory reportFactory = new ReportFactory(enrolmentManager);
                         Report report = null;
                         System.out.println("""
@@ -117,8 +137,25 @@ public class MainProgram {
                         }
                         sep();
                         break;
-                    case"4":
-                        printArray(enrolmentManager.getAllEnrolment());
+
+                    case"5":
+                        System.out.println("""
+                            1. Display all enrolments
+                            2. Display all students
+                            3. Display all courses
+                            Other keys to return...""");
+                        System.out.print("> ");
+                        choice = userInput.nextLine();
+                        sep();
+
+                        switch (choice) {
+                            default -> {
+                            }
+                            case "1" -> printArray(enrolmentManager.getAllEnrolment());
+                            case "2" -> printArray(enrolmentManager.getStudents());
+                            case "3" -> printArray(enrolmentManager.getCourses());
+                        }
+
                         sep();
                         break;
                 }
